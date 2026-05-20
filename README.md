@@ -16,6 +16,5 @@
 
 
 ## Documentation
-
-[Flex](https://www.admb-project.org/tools/flex/flex25.pdf)
-[Bison](https://www.gnu.org/software/bison/manual/bison.pdf)
+- [Flex](https://www.admb-project.org/tools/flex/flex25.pdf)
+- [Bison](https://www.gnu.org/software/bison/manual/bison.pdf)
