@@ -1,6 +1,11 @@
 CFLAGS  := -g -Wall -Wextra
 
-TARGET  := scanner
+MODULE  := scanner
+LIBRARY := lib$(MODULE).a
+
+DEPENDS := parser
+
+INCLUDES := $(addprefix -I../,$(DEPENDS))
 
 LEX_SRC := scanner.l
 LEX_GEN := scanner.c
@@ -11,19 +16,19 @@ OBJ := $(SRC:.c=.o) scanner.o
 
 .PHONY: all clean
 
-all: $(TARGET)
+all: $(LIBRARY)
 
 $(LEX_GEN): $(LEX_SRC)
 	$(FLEX) -o $@ $<
 
 scanner.o: $(LEX_GEN)
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 %.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
-$(TARGET): $(OBJ)
-	$(CC) $(CFLAGS) $(OBJ) -lfl -o $@
+$(LIBRARY): $(OBJ)
+	$(AR) rcs $@ $(OBJ)
 
 clean:
-	rm -f $(TARGET) *.o $(LEX_GEN)
+	rm -f *.o *.a $(LEX_GEN)

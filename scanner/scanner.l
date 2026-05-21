@@ -1,38 +1,42 @@
+%option noyywrap
+%option noinput nounput
+
 %{
-#include "token.h"
-#include <stdio.h>
+#include "../parser/parser.tab.h"
+
+#include <stdlib.h>
 %}
 
-DIGIT   [0-9]
+DIGIT      [0-9]
+IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
 
 %%
 
-{DIGIT}+        { printf("integer: %d\n", atoi(yytext)); return INTEGER; }
+"return"        { return RETURN; }
+"void"          { return VOID; }
 
-" "             {}
+"i8"            { return I8; }
+"i16"           { return I16; }
+"i32"           { return I32; }
+"i64"           { return I64; }
 
-void            { printf("void\n"); }
-return          { printf("return\n"); }
-i32             { printf("i32\n"); }
+[-]*{DIGIT}+    {
+                    yylval = atoi(yytext);
+                    return INTEGER;
+                }
 
-"("             { printf("left_paran\n"); }
-")"             { printf("right_paran\n"); }
-"{"             { printf("left_c_brace\n"); }
-"}"             { printf("right_c_brace\n"); }
-"["             { printf("left_brace\n"); }
-"]"             { printf("left_brace\n"); }
-";"             { printf("semicolon\n"); }
+{IDENTIFIER}    { return IDENTIFIER; }
 
-[a-z][a-z0-9]*  { printf("identifier: %s\n", yytext); }
+"("             { return '('; }
+")"             { return ')'; }
+"{"             { return '{'; }
+"}"             { return '}'; }
+";"             { return ';'; }
+
+[ \t\n]+        {}
+
+.               {
+                    return yytext[0];
+                }
 
 %%
-
-int main(int argc, char** argv)
-{
-    argv++, --argc;
-    if (argc > 0)
-        yyin = fopen(argv[0], "r");
-    else
-        yyin = stdin;
-    yylex();
-}
