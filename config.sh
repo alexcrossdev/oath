@@ -1,6 +1,6 @@
 #!/bin/sh
 
-MODULES="parser scanner oath"
+MODULES="ast parser scanner codegen oath"
 
 export MAKE=${MAKE:-make}
 

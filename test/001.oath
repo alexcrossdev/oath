@@ -1,0 +1,26 @@
+i32 add(i32 a, i32 b)
+{
+    return a + b;
+}
+
+i32 main(void)
+{
+    i32 x;
+    x = add(10, 20);
+
+    if (x)
+    {
+        x = x - 1;
+    }
+    else
+    {
+        x = 0;
+    }
+
+    while (x)
+    {
+        x = x - 1;
+    }
+
+    return x;
+}

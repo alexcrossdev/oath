@@ -3,7 +3,7 @@ CFLAGS  := -g -Wall -Wextra
 MODULE  := parser
 LIBRARY := lib$(MODULE).a
 
-DEPENDS :=
+DEPENDS := ast
 
 INCLUDES := $(addprefix -I../,$(DEPENDS))
 

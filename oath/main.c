@@ -1,7 +1,11 @@
 #include <stdio.h>
 
+#include <codegen.h>
+#include <ast.h>
+
 extern int yyparse(void);
 extern FILE *yyin;
+extern ast_node *root;
 
 int main(int argc, char** argv)
 {
@@ -18,6 +22,8 @@ int main(int argc, char** argv)
     }
 
     yyparse();
+
+    ast_dump(root, 0);
 
     fclose(yyin);
 
